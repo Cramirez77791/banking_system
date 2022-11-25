@@ -2,7 +2,6 @@ package com.co.tita.payments.core.reports;
 
 import lombok.*;
 
-import javax.persistence.Column;
 import java.io.Serializable;
 
 @Getter
@@ -20,7 +19,6 @@ public class UserReport implements Serializable {
 
     private boolean isActive;
 
-    private String message;
-
+    private String fullName;
 
 }

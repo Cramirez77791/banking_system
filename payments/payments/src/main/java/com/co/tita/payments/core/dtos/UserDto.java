@@ -12,5 +12,6 @@ import lombok.*;
 public class UserDto {
     private String userName;
     private String passWord;
+    private String fullName;
     private boolean isActive;
 }

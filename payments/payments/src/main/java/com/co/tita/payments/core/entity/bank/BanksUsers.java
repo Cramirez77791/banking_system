@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.*;
 
@@ -19,12 +18,12 @@ public class BanksUsers {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name = "iduser", nullable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idUser",referencedColumnName = "id")
     private User idUser;
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name ="idbank", nullable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name ="idBank",referencedColumnName = "id")
     private Bank idBank;
 
 }

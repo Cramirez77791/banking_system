@@ -42,7 +42,8 @@ public class BankUsersServiceImpl implements BankUsersService {
     }
 
     @Override
-    public BanksUsers saveBankUsers(Long userId, Long bankId) {
+    @Transactional
+    public Long saveBankUsers(Long userId, Long bankId) {
      BanksUsers  banksUsers = new BanksUsers();
      Bank bank = new Bank();
      bank.setId(bankId);
@@ -53,13 +54,23 @@ public class BankUsersServiceImpl implements BankUsersService {
      banksUsers.setIdUser(user);
 
      bankUsersRepository.saveAndFlush(banksUsers);
-
-     Optional<BanksUsers> optionalBanksUsers = bankUsersRepository.findById(banksUsers.getId());
-
-     if(optionalBanksUsers.isPresent()){
-         banksUsers = optionalBanksUsers.get();
-     }
-
-        return banksUsers;
+     return banksUsers.getId();
     }
+
+    @Override
+    @Transactional
+    public BanksUsersReport getById(Long id) {
+        BanksUsersReport banksUsersReport = new BanksUsersReport();
+        Optional<BanksUsers> optionalBanksUsers = bankUsersRepository.getBanksUsersById(id);
+
+        if(optionalBanksUsers.isPresent()){
+            BanksUsers banksUsers1 = optionalBanksUsers.get();
+            banksUsersReport.setId(banksUsers1.getId());
+            banksUsersReport.setIdUser(banksUsers1.getIdUser());
+            banksUsersReport.setIdBank(banksUsers1.getIdBank());
+        }
+        return banksUsersReport;
+    }
+
+
 }

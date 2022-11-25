@@ -26,6 +26,7 @@ public class BankServiceImpl implements BankService {
     @Override
     public List<BanksUsers> getBanksByUserId(Long userId) {
         User user = new User();
+        user.setId(userId);
         Optional<List<BanksUsers>> banksUsers = bankUsersRepository.findBanksUsersByIdUser(user);
         if(banksUsers.isPresent()){
             return banksUsers.get();

@@ -13,6 +13,6 @@ public interface BankUsersRepository extends JpaRepository<BanksUsers,Long> {
 
     Optional<List<BanksUsers>> findBanksUsersByIdUser(User userId);
 
-    Optional<BanksUsers> findById(Long id);
+    Optional<BanksUsers> getBanksUsersById(Long id);
 
 }

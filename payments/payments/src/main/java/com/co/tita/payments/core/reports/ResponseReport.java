@@ -1,5 +1,6 @@
 package com.co.tita.payments.core.reports;
 
+
 import lombok.*;
 
 @Getter
@@ -7,9 +8,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class BankReport {
-    private Long id;
-    private String bankName;
+public class ResponseReport<T> {
 
+    private T entity;
+    private String message;
 
 }

@@ -8,7 +8,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
+
 
 @Entity(name = "payments")
 @Getter
@@ -28,7 +29,7 @@ public class Payment implements Serializable {
     private double quantityQuotas;
 
     @ManyToOne
-    @JoinColumn(name = "fk_payment_credit", nullable = false, updatable = false)
+    @JoinColumn(name = "creditId", nullable = false, updatable = false)
     private Credit creditId;
 
     @Column(name = "paymentdate", nullable = false)

@@ -1,7 +1,6 @@
 package com.co.tita.payments.core.entity.users;
 
 import com.co.tita.payments.core.entity.bank.BanksUsers;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,8 +10,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
-
 
 
 @Entity(name = "users")
@@ -30,11 +27,7 @@ public class User implements Serializable{
     private String passWord;
     @Column(name ="isactive", nullable = false)
     private boolean isActive;
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUser")
-    private Collection<UserRoles> roles;
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUser")
-    private Collection<BanksUsers> banks;
+    @Column(name ="fullname", nullable = false)
+    private String fullName;
 
 }

@@ -2,7 +2,9 @@ package com.co.tita.payments.core.controllers;
 
 import com.co.tita.payments.core.dtos.BankUserDto;
 import com.co.tita.payments.core.entity.bank.BanksUsers;
+import com.co.tita.payments.core.reports.BankReport;
 import com.co.tita.payments.core.reports.BanksUsersReport;
+import com.co.tita.payments.core.reports.ResponseReport;
 import com.co.tita.payments.core.service.banks.BankUsersService;
 import com.co.tita.payments.core.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,41 +21,62 @@ public class BankUsersController {
     @Autowired
     private BankUsersService bankUsersService;
 
-    @GetMapping("/get")
-    public ResponseEntity<List<BanksUsersReport>> getBanksByUser(@RequestParam(value = "userid") Long userId){
+    @GetMapping("/get.all")
+    public ResponseEntity<ResponseReport> getBanksByUser(@RequestParam(value = "userid") Long userId){
+        ResponseReport reportResponseReport = new ResponseReport<BanksUsersReport>();
         List<BanksUsersReport> banksUsersReportList = bankUsersService.getListBanksUsersByUserId(userId);
+
         if(Utils.isEmptyList(banksUsersReportList)){
-            return new ResponseEntity<>(banksUsersReportList, null, HttpStatus.OK);
+            reportResponseReport.setEntity(banksUsersReportList);
+            reportResponseReport.setMessage("Sucess");
+            return new ResponseEntity<>(reportResponseReport, null, HttpStatus.OK);
         }
+        reportResponseReport.setMessage("Not found");
         return new ResponseEntity<>(null, null, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<BanksUsersReport> addUserToBank(@RequestBody BankUserDto bankUserDto){
-        BanksUsersReport banksUsersReport = new BanksUsersReport();
+    public ResponseEntity<ResponseReport> addUserToBank(@RequestBody BankUserDto bankUserDto){
+        ResponseReport reportResponseReport = new ResponseReport<BanksUsersReport>();
+
         if(null == bankUserDto){
-            banksUsersReport.setMessage("The dto can't be null");
-         return new ResponseEntity<>(banksUsersReport,null,HttpStatus.BAD_REQUEST);
+            reportResponseReport.setMessage("The dto can't be null");
+         return new ResponseEntity<>(reportResponseReport,null,HttpStatus.BAD_REQUEST);
         }
 
         if(null == bankUserDto.getBankId()){
-            banksUsersReport.setMessage("The bankId can't be null");
-            return new ResponseEntity<>(banksUsersReport,null,HttpStatus.BAD_REQUEST);
+            reportResponseReport.setMessage("The bankId can't be null");
+            return new ResponseEntity<>(reportResponseReport,null,HttpStatus.BAD_REQUEST);
         }
 
         if(null == bankUserDto.getUserId()){
-            banksUsersReport.setMessage("The userId can't be null");
-            return new ResponseEntity<>(banksUsersReport,null,HttpStatus.BAD_REQUEST);
+            reportResponseReport.setMessage("The userId can't be null");
+            return new ResponseEntity<>(reportResponseReport,null,HttpStatus.BAD_REQUEST);
         }
 
-        BanksUsers banksUsers = bankUsersService.saveBankUsers(bankUserDto.getUserId(), bankUserDto.getBankId());
+        Long banksUsersId = bankUsersService.saveBankUsers(bankUserDto.getUserId(), bankUserDto.getBankId());
 
-        banksUsersReport.setIdBank(banksUsers.getIdBank());
-        banksUsersReport.setIdUser(banksUsers.getIdUser());
-        banksUsersReport.setId(banksUsers.getId());
-        banksUsersReport.setMessage("Sucess");
-        return new ResponseEntity<>(banksUsersReport,null,HttpStatus.CREATED);
+        BanksUsersReport banksUsersReport  = bankUsersService.getById(banksUsersId);
+
+        reportResponseReport.setMessage("Sucess");
+        reportResponseReport.setEntity(banksUsersReport);
+        return new ResponseEntity<>(reportResponseReport,null,HttpStatus.CREATED);
 
     }
+
+    @GetMapping("/get")
+    public ResponseEntity<ResponseReport> getBanksById(@RequestParam(value = "id") Long Id){
+        ResponseReport reportResponseReport = new ResponseReport<BanksUsersReport>();
+        BanksUsersReport banksUsersReportList = bankUsersService.getById(Id);
+
+        if(null != banksUsersReportList){
+            reportResponseReport.setEntity(banksUsersReportList);
+            reportResponseReport.setMessage("Sucess");
+            return new ResponseEntity<>(reportResponseReport, null, HttpStatus.OK);
+        }
+        reportResponseReport.setMessage("Not found");
+        return new ResponseEntity<>(null, null, HttpStatus.NOT_FOUND);
+    }
+
 
 }

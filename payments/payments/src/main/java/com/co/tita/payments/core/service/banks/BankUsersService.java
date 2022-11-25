@@ -9,5 +9,7 @@ public interface BankUsersService {
 
     List<BanksUsersReport> getListBanksUsersByUserId(Long userId);
 
-    BanksUsers saveBankUsers(Long userId, Long bankId);
+    Long saveBankUsers(Long userId, Long bankId);
+
+    BanksUsersReport getById(Long id);
 }

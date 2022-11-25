@@ -1,8 +1,10 @@
 package com.co.tita.payments.core.reports;
 
-import com.co.tita.payments.core.entity.bank.Bank;
-import com.co.tita.payments.core.entity.users.User;
+
+import com.co.tita.front.entity.bank.Bank;
+import com.co.tita.front.entity.users.User;
 import lombok.*;
+
 import java.io.Serializable;
 
 @Getter

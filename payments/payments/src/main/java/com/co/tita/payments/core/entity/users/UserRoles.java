@@ -21,20 +21,12 @@ public class UserRoles implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "fk_users", nullable = false, updatable = false)
+    @JoinColumn(name = "idUser", nullable = false, updatable = false)
     private User idUser;
 
     @ManyToOne
-    @JoinColumn(name = "fk_roles", nullable = false, updatable = false)
+    @JoinColumn(name = "idRol", nullable = false, updatable = false)
     private Roles idRol;
 
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 
 }

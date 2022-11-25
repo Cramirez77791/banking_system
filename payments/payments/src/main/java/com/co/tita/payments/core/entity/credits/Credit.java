@@ -2,6 +2,7 @@ package com.co.tita.payments.core.entity.credits;
 
 import com.co.tita.payments.core.entity.bank.Bank;
 import com.co.tita.payments.core.entity.payments.Payment;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "credits")
@@ -32,16 +33,17 @@ public class Credit implements Serializable {
     private double quotaAmount;
 
     @Column(name = "creditdate", nullable = false)
+    @JsonFormat(pattern="dd-MM-yyyy")
     private Date creditDate;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_credit_banks", nullable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name ="bankId",referencedColumnName = "id")
     private Bank bankId;
 
     @Column(name = "userid", nullable = false)
     private Long userId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "creditId")
+    @OneToMany(mappedBy = "creditId")
     private List<Payment> payments;
 
 }
