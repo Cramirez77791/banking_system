@@ -22,7 +22,7 @@ public class PaymentServiceImpl implements PaymentService {
     public Long savePayment(PaymentDto paymentDto) throws ParseException {
         Payment payment = new Payment();
         payment.setAmountPayment(paymentDto.getAmountPayment());
-        payment.setPaymentDate(Utils.formatDate(paymentDto.getPaymentDate().toString()));
+        payment.setPaymentDate(Utils.formatDate(paymentDto.getPaymentDate()));
 
         Credit credit = new Credit();
         credit.setId(paymentDto.getCreditId());

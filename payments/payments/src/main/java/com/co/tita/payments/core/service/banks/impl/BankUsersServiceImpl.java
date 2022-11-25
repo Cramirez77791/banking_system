@@ -3,6 +3,7 @@ package com.co.tita.payments.core.service.banks.impl;
 import com.co.tita.payments.core.entity.bank.Bank;
 import com.co.tita.payments.core.entity.bank.BanksUsers;
 import com.co.tita.payments.core.entity.users.User;
+import com.co.tita.payments.core.reports.BankReport;
 import com.co.tita.payments.core.reports.BanksUsersReport;
 import com.co.tita.payments.core.repository.banks.BankUsersRepository;
 import com.co.tita.payments.core.service.banks.BankUsersService;
@@ -32,7 +33,10 @@ public class BankUsersServiceImpl implements BankUsersService {
             banksUsers.forEach(bank -> {
                 BanksUsersReport banksUsersReport = new BanksUsersReport();
                 banksUsersReport.setId(bank.getId());
-                banksUsersReport.setIdBank(bank.getIdBank());
+                BankReport bankReport = new BankReport();
+                bankReport.setBankName(bank.getIdBank().getBankName());
+                bankReport.setId(bank.getIdBank().getId());
+                banksUsersReport.setIdBank(bankReport);
                 banksUsersReport.setIdUser(bank.getIdUser());
                 banksUsersReports.add(banksUsersReport);
             });
@@ -67,7 +71,10 @@ public class BankUsersServiceImpl implements BankUsersService {
             BanksUsers banksUsers1 = optionalBanksUsers.get();
             banksUsersReport.setId(banksUsers1.getId());
             banksUsersReport.setIdUser(banksUsers1.getIdUser());
-            banksUsersReport.setIdBank(banksUsers1.getIdBank());
+            BankReport bankReport = new BankReport();
+            bankReport.setId(banksUsers1.getIdBank().getId());
+            bankReport.setBankName(banksUsers1.getIdBank().getBankName());
+            banksUsersReport.setIdBank(bankReport);
         }
         return banksUsersReport;
     }

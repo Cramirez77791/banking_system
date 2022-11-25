@@ -4,6 +4,7 @@ import com.co.tita.payments.core.dtos.BankDto;
 import com.co.tita.payments.core.entity.bank.Bank;
 import com.co.tita.payments.core.entity.bank.BanksUsers;
 import com.co.tita.payments.core.reports.BankReport;
+import com.co.tita.payments.core.reports.BanksUsersReport;
 import com.co.tita.payments.core.reports.ResponseReport;
 import com.co.tita.payments.core.reports.UserReport;
 import com.co.tita.payments.core.service.banks.BankService;
@@ -42,7 +43,7 @@ public class BankController {
     @GetMapping("/get.all")
     public ResponseEntity<ResponseReport> getUserData(@RequestParam("userid") Long userid){
         ResponseReport reportResponseReport = new ResponseReport<BankReport>();
-        List<BanksUsers> userReport =bankService.getBanksByUserId(userid);
+        List<BanksUsersReport> userReport =bankService.getBanksByUserId(userid);
         reportResponseReport.setEntity(userReport);
         return new ResponseEntity<>(reportResponseReport,null,HttpStatus.OK);
     }

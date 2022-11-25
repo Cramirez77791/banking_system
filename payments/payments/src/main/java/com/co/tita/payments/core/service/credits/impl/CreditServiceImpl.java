@@ -10,12 +10,14 @@ import com.co.tita.payments.core.repository.credits.CreditRepository;
 import com.co.tita.payments.core.service.credits.CreditService;
 import com.co.tita.payments.core.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class CreditServiceImpl implements CreditService {
 
     @Autowired
@@ -118,9 +120,11 @@ public class CreditServiceImpl implements CreditService {
             Credit credit = creditOptional.get();
             creditDetailReport.setId(credit.getId());
             creditDetailReport.setQuotaQuantity(credit.getQuotaQuantity());
+            creditDetailReport.setQuotaAmount(credit.getQuotaAmount());
             creditDetailReport.setAmount(credit.getAmount());
             creditDetailReport.setUserId(credit.getUserId());
             creditDetailReport.setBankId(credit.getBankId());
+            creditDetailReport.setCreditDate(Utils.formatDate(credit.getCreditDate()));
             List<PaymentCreditReport> paymentReportList = new ArrayList<>();
             credit.getPayments().forEach(payment -> {
                 PaymentCreditReport paymentCreditReport = new PaymentCreditReport();
@@ -128,6 +132,7 @@ public class CreditServiceImpl implements CreditService {
                 paymentCreditReport.setId(payment.getId());
                 paymentCreditReport.setCreditId(payment.getCreditId().getId());
                 paymentCreditReport.setAmountPayment(payment.getAmountPayment());
+                paymentCreditReport.setQuantityQuotas(payment.getQuantityQuotas());
                 try {
                     paymentCreditReport.setPaymentDate(Utils.formatDate(payment.getPaymentDate()));
                 } catch (ParseException e) {
@@ -136,7 +141,7 @@ public class CreditServiceImpl implements CreditService {
                 paymentCreditReport.setUserId(payment.getUserId());
                 paymentReportList.add(paymentCreditReport);
             });
-
+            creditDetailReport.setPaymentReportList(paymentReportList);
 
         }
 

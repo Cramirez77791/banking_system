@@ -25,11 +25,8 @@ public class Bank implements Serializable {
     @Column(name = "bankname", nullable = false)
     private String bankName;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idBank")
-    private List<BanksUsers> users;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bankId")
-    private List<Credit> credits;
+
 
 
 }

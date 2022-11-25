@@ -23,20 +23,20 @@ public class Utils {
     }
 
     public static Date formatDate(String date) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date myDate = (Date) simpleDateFormat.parse(date);
         simpleDateFormat.format(myDate);
         return myDate;
     }
 
     public static String formatDate(Date date) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         simpleDateFormat.format(date);
         return date.toString();
     }
 
     public static Date getDate(String date) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date myDate = (Date) simpleDateFormat.parse(date);
         simpleDateFormat.format(myDate);
         return myDate;

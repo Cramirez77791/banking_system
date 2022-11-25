@@ -1,6 +1,6 @@
 package com.co.tita.payments.core.reports;
 
-import com.co.tita.front.entity.credits.Credit;
+import com.co.tita.payments.core.entity.credits.Credit;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
